@@ -1,0 +1,6 @@
+/kubeconfig
+/env.yaml
+
+/helmfile-*
+
+*.tgz

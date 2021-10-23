@@ -1,0 +1,25 @@
+postgresql:
+  global:
+    storageClass: {{ .Values | get "storageClass" "local-path" }}
+persistence:
+  storageClass: {{ .Values | get "storageClass" "local-path" }}
+service:
+  http:
+    type: ClusterIP
+    port: 3000
+gitea:
+  admin:
+    username: tosone
+    password: {{ .Values | get "password" "secret" }}
+    email: "i@tosone.cn"
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: git.example.com
+      paths:
+        - path: /
+          pathType: Prefix

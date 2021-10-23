@@ -1,0 +1,4 @@
+storageClass:
+  defaultClass: false
+  create: true
+  name: {{ .Values | get "storageClass" "local-path" }}

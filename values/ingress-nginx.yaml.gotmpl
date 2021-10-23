@@ -1,0 +1,11 @@
+controller:
+  hostNetwork: true
+  hostPort:
+    enabled: true
+    ports:
+      http: 80
+      https: 443
+  service:
+    enabled: true
+    type: ClusterIP
+  kind: DaemonSet
