@@ -3,5 +3,8 @@
 nameOverride:
 fullnameOverride:
 
+issuer:
+  email: user@example.com
+
 nginxExport:
   6379: aaa

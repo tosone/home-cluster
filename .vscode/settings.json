@@ -3,6 +3,7 @@
     "*.yaml": "helm",
     "*.gotmpl": "helm",
     "*.tpl": "helm",
-    "NOTES.txt": "helm"
+    "NOTES.txt": "helm",
+    "env.yaml.sample": "helm"
   },
 }
