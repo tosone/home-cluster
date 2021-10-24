@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.yaml": "helm",
+    "*.gotmpl": "helm",
+    "*.tpl": "helm",
+    "NOTES.txt": "helm"
+  },
+}

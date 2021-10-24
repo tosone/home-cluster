@@ -4,3 +4,5 @@
 /helmfile-*
 
 *.tgz
+*.zip
+*.tar.gz
