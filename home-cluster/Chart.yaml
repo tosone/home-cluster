@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: v1.0.0
+description: Home cluster
+home: https://tosone.cn
+maintainers:
+- email: i@tosone.cn
+  name: Tosone
+name: home-cluster
+sources:
+- https://github.com/tosone/home-cluster
+version: 1.0.0
