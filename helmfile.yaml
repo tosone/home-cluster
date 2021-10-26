@@ -12,6 +12,20 @@ releases:
     chart: ./home-cluster
     values:
       - ./values/home-cluster.yaml.gotmpl
+    needs:
+      - cert-manager
+  - name: cert-manager
+    namespace: {{ .Values.namespace }}
+    chart: ./charts/cert-manager
+    values:
+      - ./values/cert-manager.yaml.gotmpl
+  - name: ingress-nginx
+    namespace: {{ .Values.namespace }}
+    chart: ./charts/ingress-nginx
+    values:
+      - ./values/ingress-nginx.yaml.gotmpl
+    needs:
+      - cert-manager
   - name: local-path-provisioner
     namespace: {{ .Values.namespace }}
     chart: ./charts/local-path-provisioner
@@ -32,8 +46,3 @@ releases:
     needs:
       - ingress-nginx
       - local-path-provisioner
-  - name: ingress-nginx
-    namespace: {{ .Values.namespace }}
-    chart: ./charts/ingress-nginx
-    values:
-      - ./values/ingress-nginx.yaml.gotmpl

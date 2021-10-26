@@ -16,10 +16,13 @@ ingress:
   enabled: true
   className: nginx
   annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+    cert-manager.io/issuer: {{ .Values | get "certIssuer" "letsencrypt-staging" }}
   hosts:
-    - host: git.example.com
+    - host: {{ .Values.domain.git }}
       paths:
         - path: /
           pathType: Prefix
+  tls:
+    - secretName: tls-gitea
+      hosts:
+        - {{ .Values.domain.git }}

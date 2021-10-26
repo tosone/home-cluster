@@ -1,5 +1,5 @@
 controller:
-  hostNetwork: true
+  hostNetwork: {{ .Values | get "ingressHostnetwork" true }}
   hostPort:
     enabled: true
     ports:
@@ -8,4 +8,4 @@ controller:
   service:
     enabled: true
     type: ClusterIP
-  kind: DaemonSet
+  kind: {{ .Values | get "ingressKind" "DaemonSet" }}
