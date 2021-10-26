@@ -9,7 +9,7 @@ helmDefaults:
 releases:
   - name: home-cluster
     namespace: {{ .Values.namespace }}
-    chart: ./home-cluster
+    chart: ./charts/home-cluster
     values:
       - ./values/home-cluster.yaml.gotmpl
     needs:
@@ -38,11 +38,20 @@ releases:
       - ./values/redis.yaml.gotmpl
     needs:
       - local-path-provisioner
+      - ingress-nginx
   - name: gitea
     namespace: {{ .Values.namespace }}
     chart: ./charts/gitea
     values:
       - ./values/gitea.yaml.gotmpl
+    needs:
+      - ingress-nginx
+      - local-path-provisioner
+  - name: mongodb
+    namespace: {{ .Values.namespace }}
+    chart: ./charts/mongodb
+    values:
+      - ./values/mongodb.yaml.gotmpl
     needs:
       - ingress-nginx
       - local-path-provisioner

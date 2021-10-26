@@ -1,4 +1,15 @@
-global:
-  storageClass: {{ .Values | get "storageClass" "local-path" }}
-  redis:
-    password: {{ .Values | get "password" "secret" }}
+master:
+  persistence:
+    enabled: true
+    storageClass: {{ .Values | get "storageClass" "local-path" }}
+    size: 8Gi
+replica:
+  replicaCount: 3
+  persistence:
+    enabled: true
+    storageClass: {{ .Values | get "storageClass" "local-path" }}
+    size: 8Gi
+auth:
+  enabled: true
+  sentinel: true
+  password: {{ .Values | get "password" "secret" }}

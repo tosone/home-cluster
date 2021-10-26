@@ -1,0 +1,16 @@
+persistence:
+  enabled: true
+  storageClass: {{ .Values | get "storageClass" "local-path" }}
+  size: 1Gi
+
+auth:
+  enabled: true
+  rootPassword: {{ .Values | get "password" "secret" }}
+  username: {{ .Values | get "username" "tosone" }}
+  password: {{ .Values | get "password" "secret" }}
+  database: {{ .Values | get "database" "database" }}
+
+replicaCount: 3
+
+arbiter:
+  enabled: true

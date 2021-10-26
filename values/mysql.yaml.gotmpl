@@ -1,0 +1,19 @@
+architecture: replication
+
+auth:
+  rootPassword: {{ .Values | get "password" "secret" }}
+  database: {{ .Values | get "database" "database" }}
+  username: {{ .Values | get "username" "tosone" }}
+  password: {{ .Values | get "password" "secret" }}
+
+primary:
+  persistence:
+    enabled: true
+    storageClass: {{ .Values | get "storageClass" "local-path" }}
+    size: 8Gi
+secondary:
+  replicaCount: 1
+  persistence:
+    enabled: true
+    storageClass: {{ .Values | get "storageClass" "local-path" }}
+    size: 8Gi
