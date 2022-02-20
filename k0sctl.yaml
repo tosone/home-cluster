@@ -1,0 +1,21 @@
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: k0s-cluster
+spec:
+  hosts:
+    - ssh:
+        address: xx.xx.xx.xx
+        user: admin
+        port: 22
+        keyPath: /home/admin/.ssh/id_rsa
+      role: controller+worker
+      # uploadBinary: true
+      # k0sBinaryPath: ./k0s-v1.22.2+k0s.1-amd64
+      # files:
+      #   - name: bundle-file
+      #     src: ./k0s-airgap-bundle-v1.22.2+k0s.1-amd64
+      #     dstDir: /var/lib/k0s/images/
+      #     perm: 0755
+  k0s:
+    version: 1.23.3+k0s.1
