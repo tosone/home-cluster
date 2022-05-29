@@ -1,6 +1,8 @@
 /kubeconfig
 /env.yaml
 
+/k0sctl
+/k0sctl.yaml
 /helmfile-*
 
 *.tgz
