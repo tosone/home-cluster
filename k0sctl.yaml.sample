@@ -10,6 +10,7 @@ spec:
         port: 22
         keyPath: /home/admin/.ssh/id_rsa
       role: controller+worker
+      noTaints: true
       # uploadBinary: true
       # k0sBinaryPath: ./k0s-v1.23.6+k0s.2-amd64
       # files:

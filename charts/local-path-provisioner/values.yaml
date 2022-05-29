@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: rancher/local-path-provisioner
-  tag: v0.0.20
+  tag: v0.0.22
   pullPolicy: IfNotPresent
 
 helperImage:
@@ -58,8 +58,7 @@ nodePathMap:
     paths:
       - /opt/local-path-provisioner
 
-resources:
-  {}
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -94,40 +93,12 @@ configmap:
   # specify the custom script for setup and teardown
   setup: |-
     #!/bin/sh
-    while getopts "m:s:p:" opt
-    do
-        case $opt in
-            p)
-            absolutePath=$OPTARG
-            ;;
-            s)
-            sizeInBytes=$OPTARG
-            ;;
-            m)
-            volMode=$OPTARG
-            ;;
-        esac
-    done
-
-    mkdir -m 0777 -p ${absolutePath}
+    set -eu
+    mkdir -m 0777 -p "$VOL_DIR"
   teardown: |-
     #!/bin/sh
-    while getopts "m:s:p:" opt
-    do
-        case $opt in
-            p)
-            absolutePath=$OPTARG
-            ;;
-            s)
-            sizeInBytes=$OPTARG
-            ;;
-            m)
-            volMode=$OPTARG
-            ;;
-        esac
-    done
-
-    rm -rf ${absolutePath}
+    set -eu
+    rm -rf "$VOL_DIR"
   # specify the custom helper pod yaml
   helperPod: |-
     apiVersion: v1
@@ -139,3 +110,12 @@ configmap:
       - name: helper-pod
         image: busybox
         imagePullPolicy: IfNotPresent
+
+# Number of provisioner worker threads to call provision/delete simultaneously.
+# workerThreads: 4
+
+# Number of retries of failed volume provisioning. 0 means retry indefinitely.
+# provisioningRetryCount: 15
+
+# Number of retries of failed volume deletion. 0 means retry indefinitely.
+# deletionRetryCount: 15

@@ -10,4 +10,8 @@ chmod +x k0sctl
 k0sctl apply
 
 k0sctl kubeconfig > kubeconfig
+
+kubectl taint nodes node-xxx node-role.kubernetes.io/master- --kubeconfig kubeconfig
+
+KUBECONFIG=./kubeconfig helmfile sync --skip-deps
 ```

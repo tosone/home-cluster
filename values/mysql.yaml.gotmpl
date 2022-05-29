@@ -4,7 +4,7 @@ auth:
   rootPassword: {{ .Values | get "password" "secret" }}
   database: {{ .Values | get "database" "database" }}
   username: {{ .Values | get "username" "tosone" }}
-  password: {{ .Values | get "password" "secret" }}
+  password: {{ .Values | get "password" "secret" | quote }}
 
 primary:
   persistence:
