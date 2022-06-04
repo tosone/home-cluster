@@ -1,13 +1,13 @@
 persistence:
   enabled: true
   storageClass: {{ .Values | get "storageClass" "local-path" }}
-  size: 1Gi
+  size: 500Mi
 
 auth:
   enabled: true
-  rootPassword: {{ .Values | get "password" "secret" }}
+  rootPassword: {{ .Values | get "password" "secret" | quote }}
   username: {{ .Values | get "username" "tosone" }}
-  password: {{ .Values | get "password" "secret" }}
+  password: {{ .Values | get "password" "secret" | quote }}
   database: {{ .Values | get "database" "database" }}
 
 replicaCount: 3

@@ -1,0 +1,74 @@
+sources:
+  git:
+    - name: local-path-provisioner
+      namespace: {{ default "dev" .Namespace }}
+      url: https://github.com/rancher/local-path-provisioner.git
+      tag: v0.0.22
+  helm:
+    - name: bitnami
+      namespace: {{ default "dev" .Namespace }}
+      url: https://charts.bitnami.com/bitnami
+    - name: jetstack
+      namespace: {{ default "dev" .Namespace }}
+      url: https://charts.jetstack.io
+    - name: ingress-nginx
+      namespace: {{ default "dev" .Namespace }}
+      url: https://kubernetes.github.io/ingress-nginx
+    - name: twuni
+      namespace: {{ default "dev" .Namespace }}
+      url: https://helm.twun.io
+    - name: gitea-charts
+      namespace: {{ default "dev" .Namespace }}
+      url: https://dl.gitea.io/charts/
+helmreleases:
+  - name: local-path-provisioner
+    namespace: {{ default "dev" .Namespace }}
+    chart: ./deploy/chart/local-path-provisioner
+    source: GitRepository/local-path-provisioner
+    values: |-
+      storageClass:
+        defaultClass: true
+        create: true
+        name: "local-path"
+  - name: redis-cluster
+    namespace: {{ default "dev" .Namespace }}
+    chart: redis-cluster
+    source: HelmRepository/bitnami
+    values: |-
+      global:
+        storageClass: {{ default "local-path" .Persistence.StorageClass }}
+        redis:
+          password: {{ default "secret" .User.Password | quote }}
+      persistence:
+        enabled: true
+        storageClass: {{ default "local-path" .Persistence.StorageClass }}
+        size: {{ default "300Mi" .Persistence.SizeRedis }}
+  - name: cert-manager
+    namespace: {{ default "dev" .Namespace }}
+    chart: cert-manager
+    source: HelmRepository/jetstack
+    values: |-
+      installCRDs: true
+  - name: ingress-nginx
+    namespace: {{ default "dev" .Namespace }}
+    chart: ingress-nginx
+    source: HelmRepository/ingress-nginx
+    values: |-
+      controller:
+        hostPort:
+          enabled: true
+          ports:
+            http: 80
+            https: 443
+        service:
+          enabled: true
+          type: ClusterIP
+  - name: docker-registry
+    namespace: {{ default "dev" .Namespace }}
+    chart: docker-registry
+    source: HelmRepository/twuni
+    values: |-
+      persistence:
+        enabled: true
+        storageClass: {{ default "local-path" .Persistence.StorageClass }}
+        size: {{ default "300Mi" .Persistence.SizeDockerRegistry }}

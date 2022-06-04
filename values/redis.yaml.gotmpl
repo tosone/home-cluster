@@ -2,14 +2,20 @@ master:
   persistence:
     enabled: true
     storageClass: {{ .Values | get "storageClass" "local-path" }}
-    size: 8Gi
-replica:
-  replicaCount: 3
-  persistence:
-    enabled: true
-    storageClass: {{ .Values | get "storageClass" "local-path" }}
-    size: 8Gi
+    size: 300Mi
+# replica:
+#   replicaCount: 3
+#   persistence:
+#     enabled: true
+#     storageClass: {{ .Values | get "storageClass" "local-path" }}
+#     size: 300Mi
 auth:
   enabled: true
   sentinel: true
-  password: {{ .Values | get "password" "secret" }}
+  password: {{ .Values | get "password" "secret" | quote }}
+sentinel:
+  enabled: true
+  persistence:
+    enabled: true
+    storageClass: {{ .Values | get "storageClass" "local-path" }}
+    size: 300Mi

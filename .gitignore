@@ -4,6 +4,12 @@
 /k0sctl
 /k0sctl.yaml
 /helmfile-*
+/k0s-*
+
+/gomplate
+
+/vendor/
+/bin/
 
 *.tgz
 *.zip
